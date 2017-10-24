@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="jquery.js"></script>
+  <style type="text/css">
+  html,body{
+	margin: 0;
+	padding: 0;
+  }
+    #showDiv{
+    	/* background: red; */
+    	 position: fixed;
+	    top: 0px;
+	    left: 0px;
+	    width: 100%;
+  }
+  #showDiv p{
+  	margin: 0;
+  }
+          
+   @keyframes fixednav
+		{
+			from {background: #fff;}
+			to {background: #ccc;}
+		}
+    .fixednav{
+      
+	    background: #ccc!important; 	
+	    z-index: 1;
+	    animation: fixednav 2s;
+    }
+    
+    .margin{
+    	margin-top: 5000px;
+    }
+  </style>
+</head>
+<body>
+  <div id="showDiv" class="nav">
+  	<p>首页</p>
+  	<p>一</p>
+  	<p>二</p>
+  	<p>三</p>
+  </div>
+  <div class="margin">
+  	<p>123</p>
+  </div>
+
+<script type="text/javascript">
+$(function(){
+	var nav=$(".nav"); //得到导航对象
+	var win=$(window); //得到窗口对象
+	var sc=$(document);//得到document文档对象。
+	win.scroll(function(){
+	  if(sc.scrollTop()>=10){
+	    nav.addClass("fixednav");
+	  }else{
+	   nav.removeClass("fixednav");
+	  }
+	}) 
+	})
+
+
+</script>
+</body>
+</html>
