@@ -1,0 +1,46 @@
+{% extends 'home/home.html' %}
+{% block css %}
+    <style>
+     .content{
+			width: 100%;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+		}
+		.left p:nth-of-type(1){
+			font-size: 32px;
+		}
+		.left p:nth-of-type(2){
+			font-size: 28px;
+		}
+		.left p:nth-of-type(3){
+			font-size: 20px;
+			background: #0099e5;
+			padding-left: 10px;
+			padding-right: 10px;
+			width: 80px;
+			color:#fff;
+			text-align: center;
+		}
+		.right img{
+			width: 300px;
+			height: 300px;
+		}
+    </style>
+
+{% endblock %}
+{% block content %}
+    <div class="content inlink-flex">
+			<div class="left">
+				<p>Something's wrong here</p>
+				<p>404:找不到页面</p>
+				<p>主页</p>
+			</div>
+			<div class="right">
+				<img src="{{ url_for('static',filename='img/carousel.jpg') }}" />
+			</div>
+		</div>
+{% endblock %}

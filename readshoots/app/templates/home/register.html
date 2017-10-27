@@ -1,0 +1,74 @@
+{% extends 'home/home.html' %}
+{% block css %}
+    <style>
+
+     .register{
+    width: 300px;
+    height: auto;
+    padding: 20px;
+    margin-top: 150px;
+    border: 1px solid #DCDCDC;
+    border-radius: 5px;
+    background-color: #F5F5F5;
+    }
+    </style>
+
+{% endblock %}
+{% block content %}
+    <div class="container register">
+        <form method="post">
+            <fieldset>
+                {% for msg in get_flashed_messages(category_filter=["err"]) %}
+                <p class="login-box-msg" style="color: red">{{ msg }}</p>
+                {% endfor %}
+                {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                <p class="login-box-msg" style="color: green">{{ msg }}</p>
+                {% endfor %}
+                <legend style="text-align: center">注册</legend>
+                <div class="form-group">
+                    <label for="">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+                 {% for err in form.name.errors %}
+                        <div class="col-md-12"></div>
+                        <font style="color: red">{{ err }}</font>
+                 {% endfor %}
+                <div class="form-group">
+                    <label for="">{{ form.phone.label }}</label>
+                    {{ form.phone }}
+                </div>
+                 {% for err in form.phone.errors %}
+                        <div class="col-md-12"></div>
+                        <font style="color: red">{{ err }}</font>
+                 {% endfor %}
+                <div class="form-group">
+                    <label for="">{{ form.email.label }}</label>
+                    {{ form.email }}
+
+                </div>
+                {% for err in form.email.errors %}
+                        <div class="col-md-12"></div>
+                        <font style="color: red">{{ err }}</font>
+                 {% endfor %}
+                <div class="form-group">
+                    <label for="password">{{ form.pwd.label }}</label>
+                    {{ form.pwd }}
+                </div>
+                 {% for err in form.pwd.errors %}
+                        <div class="col-md-12"></div>
+                        <font style="color: red">{{ err }}</font>
+                 {% endfor %}
+                <div class="form-group">
+                    <label for="password">{{ form.repwd.label }}</label>
+                        {{ form.repwd}}
+                </div>
+                {% for err in form.repwd.errors %}
+                            <div class="col-md-12"></div>
+                        <font style="color: red">{{ err }}</font>
+                 {% endfor %}
+                    {{ form.csrf_token }}
+                    {{ form.submit }}
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

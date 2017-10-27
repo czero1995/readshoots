@@ -1,0 +1,242 @@
+.scrollNav {
+    background: #fff;
+
+}
+
+.navbar-header {
+    background: transparent !important;
+}
+.container a {
+    color: #fff !important;
+}
+
+.scrollNav a {
+    color: #525558 !important;
+}
+.carousel {
+    height: 514px;
+    width: 100%;
+}
+
+.carousel-inner {
+    height: 514px;
+}
+
+.carousel-indicators li {
+    margin: 4px;
+}
+
+.carousel-indicators .active {
+    margin: 4px !important;
+}
+
+.carousel-caption {
+    bottom: 145px;
+}
+
+.item {
+    width: 100%;
+    height: 100%;
+}
+
+.item img {
+    width: 100%;
+    height: 100% !important;
+}
+
+.category {
+    margin-bottom: 60px;
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.category-tab {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    margin-bottom: 10px;
+}
+
+.category-tab {
+    font-size: 16px;
+    color: #71767a;
+}
+
+.tabTitle {
+    cursor: pointer;
+    margin-right: 80px;
+}
+
+.active.tabTitle {
+    color: #0099e5;
+    border-bottom: 2px solid #0099e5;
+    padding-bottom: 15px;
+}
+
+.item-box {
+    width: 400px;
+    /*height: 200px;*/
+    margin-bottom: 10px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.item-box {
+    width: 400px;
+    overflow: hidden;
+    position: relative;
+    -webkit-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.item-box img {
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.item-box .ovrlyT {
+    background: rgba(0, 0, 0, 0.25);
+    height: 100%;
+    left: 100%;
+    position: absolute;
+    top: -100%;
+    width: 100%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.item-box .ovrlyB {
+    background: rgba(0, 0, 0, 0.25);
+    height: 100%;
+    left: -100%;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.item-box .buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.item-box .buttons .fa {
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    margin: 0 1px;
+    line-height: 40px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    -webkit-transition: all 0.2s 0.3s;
+    -moz-transition: all 0.2s 0.3s;
+    -o-transition: all 0.2s 0.3s;
+    transition: all 0.2s 0.3s;
+    opacity: 0;
+}
+
+.item-box:hover .ovrlyT {
+    left: 0;
+    top: 0;
+}
+
+.item-box:hover .ovrlyB {
+    left: 0;
+    top: 0;
+}
+
+.item-box:hover .buttons .fa {
+    opacity: 1;
+}
+
+@media (max-width: 1490px) {
+
+    .item-box {
+        width: 312px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .category {
+        padding-right: 0;
+        padding-left: 88px;
+    }
+
+    .item-box {
+        width: 254px;
+    }
+}
+
+@media (max-width: 758px) {
+    .carousel {
+        height: 328px;
+    }
+
+    .carousel-inner {
+        height: 328px;
+    }
+
+    .category {
+        padding-left: 38px;
+    }
+
+    .category-tab {
+        justify-content: space-between;
+    }
+
+    .tabTitle {
+        margin-right: 0;
+    }
+
+    .item-box {
+        width: 300px;
+    }
+}
+
+@media (max-width: 762px) {
+
+    .category {
+        padding-right: 0;
+        padding-left: 28px;
+    }
+
+    .item-box {
+        width: 180px;
+    }
+}
+
+/*iPhone 5:*/
+
+@media screen and (device-aspect-ratio: 40/71) {
+    .category {
+        padding-left: 0;
+    }
+
+    .item-box {
+        width: 312px;
+    }
+}
