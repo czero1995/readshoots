@@ -1,115 +1,164 @@
 {% extends "home/home.html" %}
 {% block css %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
-{% endblock  %}
+    <style>
+        .discover{
+            width: 100%;
+            height:300px;
+            background:url(../../static/img/carousel.jpg);
+            background-size: 100% 100%;
+            position: relative;
+        }
+    .discover p{
+        position: absolute;
+        color:#fff;
+
+        text-align: center;
+        top:50%;
+        left: 50%;
+        margin: 0 auto;
+    }
+
+    </style>
+{% endblock %}
 
 {% block content %}
 
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-    </ol>
+    <div id="container">
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">
-{#         {% for v in banner %}#}
-{#        <div class="item active">#}
-{#            <img src="{{ url_for('static',filename='uploads/'+v.img) }}">#}
-{#            <div class="carousel-caption">#}
-{#                {v.info}#}
-{#            </div>#}
-{#        </div>#}
-{#        {% endfor %}#}
-        <div class="item active">
-            <img src="../../static/img/carousel.jpg">
-            <div class="carousel-caption">
-                <p>123</p>
-            </div>
+        <div id="header">
+            <p>阅尽人生百态，摄遍世间万物</p>
         </div>
-        <div class="item">
-            <img src="../../static/img/carousel.jpg">
-            <div class="carousel-caption">
-                <p>123</p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="../../static/img/carousel.jpg">
-            <div class="carousel-caption">
-                <p>123</p>
-            </div>
-        </div>
-
+        <video id="bgvideo" loop="loop" autoplay="true" width="100%" name="media"
+               poster="{{ url_for('static',filename='img/video_cover') }}">
+            <source src="{{ url_for('static',filename='night.mp4') }}" type="video/mp4"/>
+        </video>
     </div>
-</div>
+    {#    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">#}
+    {#        <!-- Indicators -->#}
+    {#        <ol class="carousel-indicators">#}
+    {#            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>#}
+    {#            <li data-target="#carousel-example-generic" data-slide-to="1"></li>#}
+    {#            <li data-target="#carousel-example-generic" data-slide-to="2"></li>#}
+    {#        </ol>#}
+    {##}
+    {#        <!-- Wrapper for slides -->#}
+    {#        <div class="carousel-inner" role="listbox">#}
+    {#            <div class="item active">#}
+    {#                <img src="../../static/img/carousel.jpg">#}
+    {#                <div class="carousel-caption">#}
+    {#                    <p>123</p>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="item">#}
+    {#                <img src="../../static/img/carousel.jpg">#}
+    {#                <div class="carousel-caption">#}
+    {#                    <p>123</p>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="item">#}
+    {#                <img src="../../static/img/carousel.jpg">#}
+    {#                <div class="carousel-caption">#}
+    {#                    <p>123</p>#}
+    {#                </div>#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {#    </div>#}
 
-<div class="category">
-    <div class="category-tab">
-        <p class="tabTitle" :class="{active: tab === 'people'}" @click="onSelectTab('people')">People</p>
-        <p class="tabTitle" :class="{active: tab === 'landscapes'}" @click="onSelectTab('landscapes')">Landscapes</p>
-        <p class="tabTitle" :class="{active: tab === 'nature'}" @click="onSelectTab('nature')">Nature</p>
-        <p class="tabTitle" :class="{active: tab === 'city'}" @click="onSelectTab('city')">City</p>
-        <p class="tabTitle" :class="{active: tab === 'animals'}" @click="onSelectTab('animals')">Animals</p>
-    </div>
-    <div class="category-item" v-show="tab === 'people'">
-        {% for v in people %}
-            <div class="item-box">
-                <img src="{{ url_for('static',filename='uploads/'+v.img) }}" >
-                <div class="ovrlyT"></div>
-                <div class="ovrlyB"></div>
-                {% if "user" in session %}
-                <div class="buttons">
-                    <img class="fa" src="{{ url_for('static',filename='img/collect.png') }}"/>
-                    <img class="fa" src="{{ url_for('static',filename='img/link.png') }}"/>
+    <div class="category">
+        <div class="category-tab">
+            <p class="tabTitle" :class="{active: tab === 'people'}" v-on:mouseenter="onSelectTab('people')">People</p>
+            <p class="tabTitle" :class="{active: tab === 'landscapes'}" v-on:mouseenter="onSelectTab('landscapes')">
+                Landscapes</p>
+            <p class="tabTitle" :class="{active: tab === 'nature'}" v-on:mouseenter="onSelectTab('nature')">Nature</p>
+            <p class="tabTitle" :class="{active: tab === 'city'}" v-on:mouseenter="onSelectTab('city')">City</p>
+            <p class="tabTitle" :class="{active: tab === 'animals'}" v-on:mouseenter="onSelectTab('animals')">Animals</p>
+        </div>
+        <div class="category-item" v-show="tab === 'people'">
+            {% for v in people %}
+                <div class="item-box">
+                    <img src="{{ url_for('static',filename='uploads/'+v.img) }}">
+                    <div class="ovrlyT"></div>
+                    <div class="ovrlyB"></div>
+                    {% if "user" in session %}
+                        <div class="buttons">
+                            <img class="fa" src="{{ url_for('static',filename='img/collect.png') }}"/>
+                            <img class="fa" src="{{ url_for('static',filename='img/link.png') }}"/>
+                        </div>
+                    {% else %}
+                        <p class="fa">请登录</p>
+                    {% endif %}
+
                 </div>
-                {% else %}
-                    <p class="fa">请登录</p>
-                {%  endif %}
-
-            </div>
-        {% endfor %}
-    </div>
-    <div class="category-item" v-show="tab === 'landscapes'">
-        {% for v in city %}
-        <div class="item-box">
-            <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+            {% endfor %}
         </div>
-        {% endfor %}
+        <div class="category-item" v-show="tab === 'landscapes'">
+            {% for v in landscapes %}
+                <div class="item-box">
+                    <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="category-item" v-show="tab === 'nature'">
+            {% for v in nature %}
+                <div class="item-box">
+                    <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="category-item" v-show="tab === 'city'">
+            {% for v in city %}
+                <div class="item-box">
+                    <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="category-item" v-show="tab === 'animals'">
+            {% for v in animals %}
+                <div class="item-box">
+                    <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-</div>
+
+    <div class="discover">
+        <p>点击发现更多</p>
+    </div>
+
+
 {% endblock %}
 {% block js %}
     <script>
-    $('.carousel').carousel();
-    $(function () {
-        var nav = $(".navbar"); //得到导航对象
-        var win = $(window); //得到窗口对象
-        var sc = $(document);//得到document文档对象。
-        win.scroll(function () {
-            if (sc.scrollTop() >440) {
-                nav.addClass("scrollNav");
-                console.log(sc.scrollTop());
-            } else {
-                nav.removeClass("scrollNav");
+        $('.carousel').carousel();
+        $(function () {
+            var nav = $(".navbar"); //得到导航对象
+            var win = $(window); //得到窗口对象
+            var sc = $(document);//得到document文档对象。
+            win.scroll(function () {
+                if (sc.scrollTop() > 30) {
+                    nav.addClass("scrollNav");
+                    console.log(sc.scrollTop());
+                } else {
+                    nav.removeClass("scrollNav");
+                }
+            })
+        });
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    tab: 'people'
+                }
+            },
+            methods: {
+                onSelectTab(tab) {
+                    this.tab = tab;
+                }
             }
         })
-    });
-
-    new Vue({
-        el: '#app',
-        data() {
-            return {
-                tab: 'people'
-            }
-        },
-        methods: {
-            onSelectTab(tab) {
-                this.tab = tab;
-            }
-        }
-    })
     </script>
 
 {% endblock %}

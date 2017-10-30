@@ -11,6 +11,9 @@
             padding:3px;
             border:1px solid #ccc
         }
+        .list-group a{
+            min-width: 100px;
+        }
 .list-group{
     padding-left:20px!important;
     box-shadow: 10px 10px 5px #ccc;
@@ -22,7 +25,7 @@
 
 </style>
 {% endblock %}
-<div class="col-md-3">
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
         <div class="list-group">
             <a id="m-1" href="{{ url_for('home.user')}}" class="list-group-item">
                 会员中心
