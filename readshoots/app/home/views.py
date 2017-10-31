@@ -3,7 +3,7 @@ from flask import render_template,flash,redirect,url_for,session,request
 from app import db,app
 from werkzeug.security import generate_password_hash
 from app.home.forms import RegisterForm,LoginForm,UserDetailForm,PwdForm
-from app.models import User,Image,Tag,Banner
+from app.models import User,Image,Tag,Banner,Collect
 import os,datetime,uuid
 from werkzeug.utils import secure_filename
 #修改文件名称
@@ -13,6 +13,9 @@ def change_filename(filename):
     return filename
 @home.route("/")
 def readshoot():
+    image = Image.query.all()
+    chooice =[(v.id) for v in image];
+    print(chooice)
     user = User.query.all()
     banner = Banner.query.all()
     people = Image.query.join(
@@ -40,7 +43,7 @@ def readshoot():
     ).filter(
         Tag.name == 'animals'
     )
-    return render_template('home/index.html',people=people,landscapes=landscapes,nature=nature,city=city,animals=animals,user=user)
+    return render_template('home/index.html',chooice=chooice,people=people,landscapes=landscapes,nature=nature,city=city,animals=animals,user=user)
 
 
 @home.route("/index/")
@@ -174,3 +177,18 @@ def pwd():
         flash("修改密码成功，请重新登录","ok")
         return redirect(url_for('home.logout'))
     return render_template("home/pwd.html",form=form,user=user)
+
+
+
+@home.route("/detail/<int:id>/", methods=["GET","POST"])
+def detail(id=None):
+    image=Image.query.join(
+        Tag
+    ).filter(
+        Tag.id == Image.tag_id,
+        Image.id == int(id)
+    ).first_or_404()
+    image.playnum = image.playnum + 1
+    db.session.add(image)
+    db.session.commit()
+    return render_template("home/detail.html",image=image)

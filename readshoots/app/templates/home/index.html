@@ -34,37 +34,6 @@
             <source src="{{ url_for('static',filename='night.mp4') }}" type="video/mp4"/>
         </video>
     </div>
-    {#    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">#}
-    {#        <!-- Indicators -->#}
-    {#        <ol class="carousel-indicators">#}
-    {#            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>#}
-    {#            <li data-target="#carousel-example-generic" data-slide-to="1"></li>#}
-    {#            <li data-target="#carousel-example-generic" data-slide-to="2"></li>#}
-    {#        </ol>#}
-    {##}
-    {#        <!-- Wrapper for slides -->#}
-    {#        <div class="carousel-inner" role="listbox">#}
-    {#            <div class="item active">#}
-    {#                <img src="../../static/img/carousel.jpg">#}
-    {#                <div class="carousel-caption">#}
-    {#                    <p>123</p>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="item">#}
-    {#                <img src="../../static/img/carousel.jpg">#}
-    {#                <div class="carousel-caption">#}
-    {#                    <p>123</p>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="item">#}
-    {#                <img src="../../static/img/carousel.jpg">#}
-    {#                <div class="carousel-caption">#}
-    {#                    <p>123</p>#}
-    {#                </div>#}
-    {#            </div>#}
-    {##}
-    {#        </div>#}
-    {#    </div>#}
 
     <div class="category">
         <div class="category-tab">
@@ -77,27 +46,31 @@
         </div>
         <div class="category-item" v-show="tab === 'people'">
             {% for v in people %}
-                <div class="item-box">
-                    <img src="{{ url_for('static',filename='uploads/'+v.img) }}">
-                    <div class="ovrlyT"></div>
-                    <div class="ovrlyB"></div>
-                    {% if "user" in session %}
-                        <div class="buttons">
-                            <img class="fa" src="{{ url_for('static',filename='img/collect.png') }}"/>
-                            <img class="fa" src="{{ url_for('static',filename='img/link.png') }}"/>
-                        </div>
-                    {% else %}
-                        <p class="fa">请登录</p>
-                    {% endif %}
+                <a href="{{ url_for('home.detail',id=v.id) }}">
+                    <div class="item-box">
+                        <img src="{{ url_for('static',filename='uploads/'+v.img) }}">
+                        <div class="ovrlyT"></div>
+                        <div class="ovrlyB"></div>
+                        {% if "user" in session %}
+                            <div class="buttons">
+                                <img id="btn-col" class="fa" src="{{ url_for('static',filename='img/collect.png') }}"/>
+                                <img class="fa" src="{{ url_for('static',filename='img/link.png') }}"/>
+                            </div>
+                        {% else %}
+                            <p class="fa">请登录</p>
+                        {% endif %}
 
-                </div>
+                    </div>
+                </a>
             {% endfor %}
         </div>
         <div class="category-item" v-show="tab === 'landscapes'">
             {% for v in landscapes %}
-                <div class="item-box">
-                    <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
-                </div>
+                <a href="{{ url_for('home.detail',id=v.id) }}">
+                    <div class="item-box">
+                        <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+                    </div>
+                </a>
             {% endfor %}
         </div>
         <div class="category-item" v-show="tab === 'nature'">
@@ -127,11 +100,10 @@
         <p>点击发现更多</p>
     </div>
 
-
 {% endblock %}
 {% block js %}
     <script>
-        $('.carousel').carousel();
+
         $(function () {
             var nav = $(".navbar"); //得到导航对象
             var win = $(window); //得到窗口对象
@@ -153,6 +125,7 @@
                     tab: 'people'
                 }
             },
+
             methods: {
                 onSelectTab(tab) {
                     this.tab = tab;
