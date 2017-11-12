@@ -15,8 +15,11 @@
             min-width: 100px;
         }
 .list-group{
-    padding-left:20px!important;
+    width: 100px;!important;
     box-shadow: 10px 10px 5px #ccc;
+    margin-left:20px;
+    margin-right:20px;
+    width:150px;
 }
 .panel-warning{
         box-shadow: 10px 10px 5px #ccc;
@@ -33,11 +36,6 @@
              <a id="m-2" href="{{ url_for('home.pwd')}}" class="list-group-item">
                 修改密码
             </a>
-            <a id="m-3"href="{{ url_for('home.user',page=1)}}" class="list-group-item">
-               评论记录
-            </a>
-            <a id="m-5" href="{{ url_for('home.user',page=1)}}" class="list-group-item">
-               收藏记录
-            </a>
         </div>
 </div>
+

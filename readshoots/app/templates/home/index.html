@@ -2,23 +2,16 @@
 {% block css %}
     <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
     <style>
-        .discover{
-            width: 100%;
-            height:300px;
-            background:url(../../static/img/carousel.jpg);
-            background-size: 100% 100%;
-            position: relative;
+        .bar-text{
+            color:#71767a !important;
         }
-    .discover p{
-        position: absolute;
-        color:#fff;
-
-        text-align: center;
-        top:50%;
-        left: 50%;
-        margin: 0 auto;
-    }
-
+        .headerIndex{
+            background: #0099e5;
+            color:#fff!important;
+            padding: 10px;
+            box-shadow: 4px 6px 30px #0099e5;
+            border-radius: 15px;
+        }
     </style>
 {% endblock %}
 
@@ -46,14 +39,14 @@
         </div>
         <div class="category-item" v-show="tab === 'people'">
             {% for v in people %}
-                <a href="{{ url_for('home.detail',id=v.id) }}">
+                <a href="{{ url_for('home.detail',id=v.id,page=1) }}">
                     <div class="item-box">
                         <img src="{{ url_for('static',filename='uploads/'+v.img) }}">
                         <div class="ovrlyT"></div>
                         <div class="ovrlyB"></div>
                         {% if "user" in session %}
                             <div class="buttons">
-                                <img id="btn-col" class="fa" src="{{ url_for('static',filename='img/collect.png') }}"/>
+
                                 <img class="fa" src="{{ url_for('static',filename='img/link.png') }}"/>
                             </div>
                         {% else %}
@@ -66,7 +59,7 @@
         </div>
         <div class="category-item" v-show="tab === 'landscapes'">
             {% for v in landscapes %}
-                <a href="{{ url_for('home.detail',id=v.id) }}">
+                <a href="{{ url_for('home.detail',id=v.id,page=1) }}">
                     <div class="item-box">
                         <img src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
                     </div>
@@ -104,19 +97,7 @@
 {% block js %}
     <script>
 
-        $(function () {
-            var nav = $(".navbar"); //得到导航对象
-            var win = $(window); //得到窗口对象
-            var sc = $(document);//得到document文档对象。
-            win.scroll(function () {
-                if (sc.scrollTop() > 30) {
-                    nav.addClass("scrollNav");
-                    console.log(sc.scrollTop());
-                } else {
-                    nav.removeClass("scrollNav");
-                }
-            })
-        });
+
 
         new Vue({
             el: '#app',

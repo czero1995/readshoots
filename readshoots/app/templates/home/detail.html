@@ -1,4 +1,5 @@
 {% extends "home/home.html" %}
+{% import "paging/comment_page.html" as pg %}
 {% block css %}
     <style>
         #app{
@@ -9,16 +10,14 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-8 col-sm-8 col-sm-8">
+    <div class="col-md-8 col-sm-8 col-sm-8" style="z-index: 999">
         <div id="moviecontainer">
             <img src="{{ url_for('static',filename='uploads/'+image.img) }}" style="width: 100%;height: 100%">
         </div>
     </div>
-    <div class="col-md-4 col-sm-4 col-sm-4" style="height:500px;">
+    <div class="col-md-4 col-sm-4 col-sm-4" style="height:500px;z-index: 999">
         <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;电影介绍</h3>
-            </div>
+
             <div class="panel-body" style="height:459px;overflow:scroll;">
                 <table class="table">
                     <tr>
@@ -52,9 +51,113 @@
             </div>
         </div>
     </div>
-    
+    <div class="col-md-12" style="margin-top:6px;">
+        <div class="panel panel-danger">
+
+            <div class="panel-body">
+                {% if "user" not in session %}
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <strong>请先<a href="{{url_for('home.login')}}" target="_blank"
+                                 class="text-info">登录</a>，才可参与评论！</strong>
+                </div>
+                {% endif %}
+
+
+                    <li>全部评论({{image.commentnum}})</li>
+
+                {% if "user"  in session %}
+                {% for msg in get_flashed_messages(category_filter=["err"]) %}
+                <p class="login-box-msg" style="color: red">{{ msg }}</p>
+                {% endfor %}
+                {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                <p class="login-box-msg" style="color: green">{{ msg }}</p>
+                {% endfor %}
+                <form role="form" style="margin-bottom:6px;" method="post">
+                    <div class="form-group">
+                        <div>
+                            <label for="input_content">{{form.content.label}}</label>
+                            {{form.content}}
+                        </div>
+                        {% for err in form.content.errors %}
+                        <div class="col-md-12"></div>
+                        <font style="color: red">{{ err }}</font>
+                        {% endfor %}
+                    </div>
+                    {{form.csrf_token}}
+                    {{form.submit}}
+
+                    <a class="btn btn-danger" id="btn-col"><span class="glyphicon glyphicon-heart"></span>&nbsp;收藏电影</a>
+                </form>
+                <div class="col-md-12"><font style="color: green" id="show_col_msg"></font></div>
+                <div class="clearfix"></div>
+                {% endif %}
+                <ul class="commentList">
+                    {% for v in page_data.items %}
+                    <li class="item cl">
+                        <a>
+                            <i class="avatar size-L radius">
+                                {% if v.user.face %}
+                                <img alt="50x50" src="{{url_for('static',filename='uploads/users/'+v.user.face)}}" class="img-circle"
+                                     style="border:1px solid #abcdef; width: 50px">
+                                {% else %}
+                                <img alt="50x50" data-src="holder.js/50x50" class="img-circle"
+                                     style="border:1px solid #abcdef; width: 50px">
+                                {% endif %}
+                            </i>
+                        </a>
+                        <div class="comment-main">
+                            <header class="comment-header">
+                                <div class="comment-meta">
+                                    <a class="comment-author" href="user.html">{{v.user.name}}</a>
+                                    评论于
+                                    <time title="{{v.addtime}}" datetime="{{v.addtime}}">{{v.addtime}}
+                                    </time>
+                                </div>
+                            </header>
+                            <div class="comment-body">
+                                <p>{{v.content | safe}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="col-md-12 text-center">
+                    {{pg.page(page_data,'home.user',image.id)}}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 {% block js %}
 
+<script>
+$(document).ready(function(){
+    $("#btn-col").click(function(){
+        var mid = {{image.id}};
+        var uid = {{ session['user_id'] }};
+        $.ajax({
+            url:"{{url_for('home.collect_add')}}",
+            type:"GET",
+            data:"mid="+mid+"&uid="+uid,
+            dataType:"json",
+            success:function(res){
+                console.log(res);
+                if(res.ok == 1){
+                    $("#show_col_msg").empty();
+                    $("#show_col_msg").append("收藏成功！");
+                }else{
+                    $("#show_col_msg").empty();
+                    $("#show_col_msg").append("已经收藏！");
+                    alert('已经收藏')
+                }
+            }
+        })
+    });
+});
+</script>
 {% endblock %}

@@ -40,13 +40,17 @@ a {
 img {
     border: 0px;
 }
-
+#app{
+    position: relative;
+}
 /** 重置表格元素 **/
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
+li:hover,a:hover{
+    background: transparent!important;
+}
 .navbar-header {
     background: #fff !important;
 }
@@ -54,3 +58,31 @@ table {
 .container a {
     color: #525558 !important;
 }
+.scrollNav {
+    background: #fff;
+
+}
+.scrollNav a {
+    color: #525558 !important;
+}
+.footer {
+            margin-top:30px;
+            width: 100%;
+            color: #fff;
+            opacity: 0.8;
+    background: #fff;
+    position: absolute;
+    height:40px;
+    line-height: 40px;
+    bottom: 0;
+        }
+
+        .navbar a {
+            color: #fff;
+        }
+        .dropdown-menu li a{
+            color:#000!important;
+        }
+        .text-muted{
+            text-align: center;
+        }

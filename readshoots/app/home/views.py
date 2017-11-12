@@ -2,8 +2,8 @@ from . import home
 from flask import render_template,flash,redirect,url_for,session,request
 from app import db,app
 from werkzeug.security import generate_password_hash
-from app.home.forms import RegisterForm,LoginForm,UserDetailForm,PwdForm
-from app.models import User,Image,Tag,Banner,Collect
+from app.home.forms import RegisterForm,LoginForm,UserDetailForm,PwdForm,CommentForm
+from app.models import User,Image,Tag,Banner,Collect,Comment
 import os,datetime,uuid
 from werkzeug.utils import secure_filename
 #修改文件名称
@@ -45,6 +45,19 @@ def readshoot():
     )
     return render_template('home/index.html',chooice=chooice,people=people,landscapes=landscapes,nature=nature,city=city,animals=animals,user=user)
 
+@home.route("/discover")
+def discover():
+    hot = Image.query.order_by(
+        Image.playnum.desc()
+    )
+    new = Image.query.order_by(
+        Image.addtime.desc()
+    )
+    max = Image.query.order_by(
+        Image.commentnum.desc()
+    )
+
+    return render_template('home/discover.html',hot=hot,new=new,max=max);
 
 @home.route("/index/")
 def index():
@@ -180,15 +193,62 @@ def pwd():
 
 
 
-@home.route("/detail/<int:id>/", methods=["GET","POST"])
-def detail(id=None):
+@home.route("/detail/<int:id>/<int:page>/", methods=["GET","POST"])
+def detail(id=None,page=None):
     image=Image.query.join(
         Tag
     ).filter(
         Tag.id == Image.tag_id,
         Image.id == int(id)
     ).first_or_404()
+    page_data = Comment.query.join(
+        Image
+    ).join(
+        User
+    ).filter(
+        Image.id == image.id,
+        User.id == Comment.user_id
+    ).order_by(
+        Comment.addtime.desc()
+    ).paginate(page=page, per_page=3)
     image.playnum = image.playnum + 1
+    form = CommentForm()
+    if "user" in session and form.validate_on_submit():
+        data = form.data
+        comment = Comment(
+            content=data["content"],
+            image_id=image.id,
+            user_id=session["user_id"]
+        )
+        db.session.add(comment)
+        db.session.commit()
+        image.commentnum = image.commentnum+1
+        db.session.add(image)
+        db.session.commit()
+        flash("提交评论成功",'ok')
+        return redirect(url_for("home.detail",id=image.id,page=1))
     db.session.add(image)
     db.session.commit()
-    return render_template("home/detail.html",image=image)
+    return render_template("home/detail.html",image=image,form=form,page_data=page_data)
+
+
+@home.route("/collect/add/",methods=["GET"])
+def collect_add():
+    uid = request.args.get("uid","")
+    mid = request.args.get("mid","")
+    collect = Collect.query.filter_by(
+        user_id = int(uid),
+        image_id = int(mid)
+    ).count()
+    if collect == 1:
+        data = dict(ok=0)
+    if collect == 0:
+        collect = Collect(
+            user_id=int(uid),
+            movie_id=int(mid)
+        )
+        db.session.add(collect)
+        db.session.commit()
+        data = dict(ok=1)
+    import json
+    return json.dumps(data)

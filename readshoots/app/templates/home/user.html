@@ -4,7 +4,18 @@
 body{
     margin-top:54px;
 }
+.headerUser{
+            background: #0099e5;
+            color:#fff!important;
+            padding: 10px;
+            box-shadow: 4px 6px 30px #0099e5;
+            border-radius: 15px;
+        }
+.col-xs-3{
 
+    width: 25%;
+    padding: 0!important;
+}
 </style>
 {% endblock %}
 {% include "home/menu.html"%}
@@ -80,7 +91,8 @@ body{
 {% block js %}
 <script>
     $(document).ready(function () {
-        $("#m-1").addClass("active")
+        $("#m-1").addClass("active");
+
     })
 </script>
 {% endblock %}

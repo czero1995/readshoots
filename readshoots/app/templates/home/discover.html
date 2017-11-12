@@ -1,0 +1,168 @@
+{% extends "home/home.html" %}
+{% import "paging/comment_page.html" as pg %}
+{% block css %}
+    <style>
+    .headerDiscover{
+            background: #0099e5;
+            color:#fff!important;
+            padding: 10px;
+            box-shadow: 4px 6px 30px #0099e5;
+            border-radius: 15px;
+        }
+        .tab-menu {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            height: 40px;
+            align-items: center;
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .inlink-flex-spaecbetween {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tab-item {
+            margin-right: 30px;
+            cursor: pointer;
+        }
+
+        .active.tab-item {
+            color: #0099e5;
+            border-bottom: 1px solid #0099e5;
+        }
+
+        .category-container {
+
+            position: absolute;
+            right: 15px;
+        }
+
+        .categoryBox {
+            position: absolute;
+            width: 140px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            left: -40px;
+            text-align: center;
+            box-shadow: -1px 10px 57px #ccc;
+            background: #fff;
+        }
+
+        .categoryBox:before {
+            content: '';
+            position: absolute;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 10px solid #ccc;
+            top: -10px;
+            left: 0;
+            right: 0;
+            width: 0;
+            margin: auto;
+        }
+
+        .slide-fade-enter-active {
+            transition: all .5s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+
+        .slide-fade-enter, .slide-fade-leave-to
+            /* .slide-fade-leave-active for below version 2.1.8 */
+        {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+
+        .tab-bar {
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        .tab-img {
+            width: 200px;
+            height: 200px;
+            margin: 30px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="tab-menu inlink-flex">
+        <p class="tab-item" :class="{active:tab === 'hot'}" @click="onSelectTab('hot')">热门</p>
+        <p class="tab-item" :class="{active:tab === 'new'}" @click="onSelectTab('new')">最新</p>
+        <p class="tab-item" :class="{active:tab === 'max'}" @click="onSelectTab('max')">评论最多</p>
+
+        <div class="tab-item category-container">
+            <p @click="menuModel=!menuModel">全部类别</p>
+            <transition name="slide-fade">
+                <div class="categoryBox" v-show="menuModel">
+                    <div class="menu-item inlink-flex-spaecbetween">
+                        <p>自然</p>
+                        <p>街景</p>
+                    </div>
+                    <div class="menu-item inlink-flex-spaecbetween">
+                        <p>人物</p>
+                        <p>动物</p>
+                    </div>
+                    <div class="menu-item inlink-flex-spaecbetween">
+                        <p>动物</p>
+                        <p>航空</p>
+                    </div>
+                    <div class="menu-item inlink-flex-spaecbetween">
+                        <p>城市</p>
+                        <p>艺术</p>
+                    </div>
+                    <div class="menu-item inlink-flex-spaecbetween">
+                        <p>婚礼</p>
+                        <p>家庭</p>
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </div>
+    <div class="tab-bar" v-show="tab == 'hot'">
+        {% for v in hot %}
+            <img class="tab-img" src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+        {% endfor %}
+
+    </div>
+    <div class="tab-bar" v-show="tab == 'new'">
+        {% for v in new %}
+            <img class="tab-img" src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+        {% endfor %}
+    </div>
+    <div class="tab-bar" v-show="tab == 'max'">
+        {% for v in max %}
+            <img class="tab-img" src="{{ url_for('static',filename='uploads/'+v.img) }}"/>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+{% block js %}
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    tab: 'hot',
+                    menuModel: false,
+                }
+            },
+            methods: {
+                onSelectTab(tab) {
+                    this.tab = tab;
+                }
+            }
+        })
+    </script>
+{% endblock %}
